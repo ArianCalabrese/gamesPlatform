@@ -1,0 +1,55 @@
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  height: 100vh;
+}
+
+.centrar {
+  text-align: center;
+}
+
+/* .form-control {
+  background-color: white;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.87);
+  word-wrap: break-word;
+  outline: none;
+  display: flex;
+  flex: 100%;
+  padding: 15px;
+  -webkit-tap-highlight-color: transparent;
+}
+*/
+/* .btng:hover {
+  color: black;
+  text-decoration: none;
+}  */
+
+/* .captcha{
+  height: 7rem;
+} */
+.inputs {
+  padding: 1.25rem 0;
+}
+
+.botonSubmit {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0.2rem;
+  bottom: 0px;
+  right: 0px;
+}
+.place-form {
+  position: absolute;
+  list-style: none;
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  background: white;
+}
