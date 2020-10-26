@@ -31,11 +31,10 @@ export const useHttpClient = () => {
         }
         console.log("SUCCESS!!");
         setIsLoading(false);
-        return responseData.servidores;
+        return responseData;
       } catch (error) {
         setError(error.message);
         setIsLoading(false);
-        console.log(body);
         throw error;
       }
     },
