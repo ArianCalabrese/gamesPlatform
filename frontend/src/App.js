@@ -55,10 +55,7 @@ const App = () => {
         <Route path="/" exact>
           <ServersCreated />
         </Route>{" "}
-        <Route path="/auth" exact>
-          <Login />
-        </Route>
-        <Redirect to="/auth" />
+        <Redirect to="/" />
       </React.Fragment>
     );
   }
