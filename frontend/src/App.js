@@ -9,9 +9,11 @@ import {
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import ServersCreated from "./servers/pages/ServersCreated";
 import Formulario from "./servers/pages/Formulario";
+import ServerInfo from "./servers/pages/ServerInfo";
 import Login from "./users/pages/Login";
 import { AuthContext } from "./shared/context/auth-context";
 import { useHttpClient } from "./shared/hooks/http-hook";
+
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -39,35 +41,45 @@ const App = () => {
 
   if (isLoggedIn) {
     routes = (
-      <React.Fragment>
+      <Switch>
         <Route path="/" exact>
           <ServersCreated />
         </Route>
         <Route path="/create" exact>
           <Formulario />
         </Route>
+        <Route path="/:serverId">
+          <ServerInfo />
+        </Route>
         <Redirect to="/" />
-      </React.Fragment>
+      </Switch>
     );
   } else {
     routes = (
-      <React.Fragment>
+      <Switch>
         <Route path="/" exact>
           <ServersCreated />
         </Route>{" "}
+        <Route path="/:serverId">
+          <ServerInfo />
+        </Route>
         <Redirect to="/" />
-      </React.Fragment>
+      </Switch>
     );
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, user:user, asignUser:asignUser }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout,
+        user: user,
+        asignUser: asignUser,
+      }}
     >
       <Router>
         <MainNavigation />
-        <Switch>
-          <main className="header">{routes}</main>
-        </Switch>
+        <main className="header">{routes}</main>
       </Router>
     </AuthContext.Provider>
   );

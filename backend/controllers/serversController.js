@@ -7,48 +7,49 @@ const googleController = require("./googleController");
 const HttpError = require("../models/http-error");
 const { google } = require("googleapis");
 
-let DUMMY_SERVER = [
-  {
-    id: "s1",
-    hostname: "Servidor Arian",
-    ip: "192.168.1.1",
-    players: 4,
-    maxplayers: 15,
-    creator: "u1",
-  },
-  {
-    id: "s2",
-    hostname: "Servidor Arian",
-    ip: "192.168.1.1",
-    players: 4,
-    maxplayers: 15,
-    creator: "u1",
-  },
-  {
-    id: "s3",
-    hostname: "Servidor Arian",
-    ip: "192.168.1.1",
-    players: 4,
-    maxplayers: 15,
-    creator: "u1",
-  },
-];
-
 const getServerById = (req, res, next) => {
   const serverId = req.params.sid;
 
-  const server = DUMMY_SERVER.find((p) => {
-    return p.id === serverId;
-  });
+  const promesa = googleController.getVMs(
+    "arboreal-stage-288722",
+    "southamerica-east1-c",
+    serverId
+  );
+//
+//
+  promesa
+    .then((vm) => {
+      const servidor = {
+        id: vm.data.name,
+        ip: vm.data.networkInterfaces[0].accessConfigs[0].natIP,
+      };
 
-  if (!server) {
-    const error = new HttpError(
-      "Could not find a server for the provided id",
-      404
-    );
-    throw error;
-  }
-  res.json({ server });
+      console.log(servidor);
+      Gamedig.query({
+        type: "cs16",
+        host: servidor.ip,
+        port: 27015,
+      })
+        .then((state) => {
+          //console.log("ESTADO");
+          //console.log(state);
+          let server = state;
+          if (!server) {
+            const error = new HttpError(
+              "Could not find a server for the provided id",
+              404
+            );
+            throw error;
+          }
+          res.json({ server });
+        })
+        .catch((error) => {
+          console.log("Server is offline");
+        });
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
 function getServers(req, res, next) {
@@ -67,7 +68,15 @@ function getServers(req, res, next) {
             (server) =>
               server.networkInterfaces[0].accessConfigs[0].natIP !== undefined
           )
-          .map((server) => server.networkInterfaces[0].accessConfigs[0].natIP); //MAPEO EL ARRAY ANTERIOR PARA OBTENER SOLAMENTE LAS IPS EXTERNAS QUE ME INTERESAN
+          .map((server) => {
+            const servidor = {
+              id: server.name,
+              ip: server.networkInterfaces[0].accessConfigs[0].natIP,
+            };
+            // console.log("servidor");
+            // console.log(servidor);
+            return servidor;
+          }); //MAPEO EL ARRAY ANTERIOR PARA OBTENER SOLAMENTE LAS IPS EXTERNAS QUE ME INTERESAN
         return respuestas;
       }
 
@@ -75,20 +84,20 @@ function getServers(req, res, next) {
 
       let findServer = function () {
         let promesasGamedig = [];
-        servidoresPrendidos.forEach((ip) => {
+        servidoresPrendidos.forEach((servidor) => {
           promesasGamedig.push(new Promise(resolverPromesa));
           function resolverPromesa(resolve, reject) {
             //UNA PROMESA POR CADA IP
             //console.log(ip);
             Gamedig.query({
               type: "cs16",
-              host: ip,
+              host: servidor.ip,
               port: 27015,
             })
               .then((state) => {
                 //console.log("ESTADO");
                 //console.log(state);
-                resolve(state);
+                resolve({ id: servidor.id, server: state });
               })
               .catch((error) => {
                 console.log("Server is offline");
@@ -119,13 +128,13 @@ function createServer(req, res, next) {
     console.log(errors);
     throw new HttpError("Invalid inputs passed", 422);
   }
-//ESTA PORQUERIA ASIGNA UN NOMBRE RANDOM A CADA VM
-  const nombreVm = "a" + v4().split("-",4);
+  //ESTA PORQUERIA ASIGNA UN NOMBRE RANDOM A CADA VM
+  const nombreVm = "a" + v4().split("-", 4);
   //console.log(nombreVm.substring(0,8));
-//
+  //
   const promesa = googleController.postVM(
     "arboreal-stage-288722",
-    nombreVm.substring(0,8), //REFACTORIZAR ESTO POR FAVOR
+    nombreVm.substring(0, 8), //REFACTORIZAR ESTO POR FAVOR
     req.body.name
   );
   promesa

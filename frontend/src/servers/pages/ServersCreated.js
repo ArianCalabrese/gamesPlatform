@@ -44,8 +44,9 @@ const ServersCreated = (props) => {
           "http://localhost:5000/api/servers"
         );
         //
-        setLoadedServers(responseData.servidores);
         console.log(responseData.servidores);
+        setLoadedServers(responseData.servidores);
+        
       } catch (error) {
         console.log("Error server not found");
       }

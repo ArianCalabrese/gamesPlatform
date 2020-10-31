@@ -1,11 +1,12 @@
 import React from "react";
 import Card from "../../shared/components/UIElements/Card";
-
+import Button from "../../shared/components/FormElements/Button";
 import "bootstrap/dist/css/bootstrap.css";
 
 import "./ServerItem.css";
 
 const ServerItem = (props) => {
+  
   return (
     <Card className="cardServer">
       <div className="container">
@@ -33,13 +34,10 @@ const ServerItem = (props) => {
             >
               Unirse
             </a>
-
-            <button
-              className="btn btn btn-outline-primary btn-block"
-              type="submit"
-            >
+            <Button to={`/${props.id}`} exact>
+              {" "}
               Copiar data
-            </button>
+            </Button>
           </div>
         </div>
       </div>
