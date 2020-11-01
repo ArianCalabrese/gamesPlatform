@@ -10,8 +10,7 @@ const Button = props => {
   if (props.href) {
     return (
       <a
-        className={`button button--${props.size || 'default'} ${props.inverse &&
-          'button--inverse'} ${props.danger && 'button--danger'}`}
+      className={`btn ${(props.estilo && 'btn-'+props.estilo) || (props.outline && 'btn-outline-'+props.outline) || ('btn-primary')} btn-${props.size || 'default'} ${props.block && 'btn-block'}`}
         href={props.href}
       >
         {props.children}

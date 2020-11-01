@@ -6,6 +6,7 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 //
 import useCopyToClipboard from "../../shared/hooks/copy-clipboard-hook";
+import Card from "../../shared/components/UIElements/Card";
 
 import "./ServerInfo.css";
 
@@ -38,33 +39,32 @@ const ServerInfo = (props) => {
         </div>
       )}
       {!isLoading && loadedServer && (
-        <div>
-          <div className="serverinfo">
-            <div className="topServerInfo">
-              <div className="imageServer">
-                <img src="#" alt="#" />
-              </div>
-              <p>Hostname: {loadedServer.name}</p>
-              <p>
-                Players: {loadedServer.players.length} /{" "}
-                {loadedServer.maxplayers}
-              </p>
-            </div>
-            <div className="downServerInfo">
-              <p>IP: {loadedServer.connect}</p>
-              <p>Ping: {loadedServer.ping}</p>
-
-              <Button href={`steam://connect/${loadedServer.connect}`}>
-                Unirse
-              </Button>
-              <Button onClick={() => handleCopy(loadedServer.connect)}>
-                Copiar IP
-              </Button>
-              {/* {isCopied && <p>Copiado!</p>} */}
-            </div>
+        <Card className="ServerInfo">
+          <div className="imageServer">
+            <img
+              src="https://static2.cs-bg.net/maps/images/screenshots/maps16/de/cs-2021-de_mirage.jpg"
+              alt="#"
+              className="pic"
+            />
           </div>
-          <div className="gameinfo"></div>
-        </div>
+          <div className="dataServer">
+            <p>Hostname: {loadedServer.name}</p>
+            <p>
+              Players: {loadedServer.players.length} / {loadedServer.maxplayers}
+            </p>
+            <p>IP: {loadedServer.connect}</p>
+            <p>Ping: {loadedServer.ping}</p>
+          </div>
+          <div className="serverButtons">
+            <Button href={`steam://connect/${loadedServer.connect}`}>
+              Unirse
+            </Button>
+            <Button onClick={() => handleCopy(loadedServer.connect)}>
+              Copiar IP
+            </Button>
+          </div>
+          {/* {isCopied && <p>Copiado!</p>} */}
+        </Card>
       )}
     </React.Fragment>
   );

@@ -1,3 +1,37 @@
+.ServerInfo {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(10px, auto);
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.imageServer {
+  grid-column: 1/2;
+}
+
+.dataServer {
+  grid-column: 2/9;
+  padding: 1rem;
+}
+
 p {
-    color: white;
+  padding: 1rem;
+}
+
+.pic {
+  width: 500px;
+  height: 350px;
+  padding: 0.5rem;
+}
+
+.serverButtons {
+  columns: 1/8;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+Button {
 }
