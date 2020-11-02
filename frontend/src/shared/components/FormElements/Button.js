@@ -1,16 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
-import './Button.css';
+import "./Button.css";
 
-
-
-const Button = props => {
+const Button = (props) => {
   if (props.href) {
     return (
       <a
-      className={`btn ${(props.estilo && 'btn-'+props.estilo) || (props.outline && 'btn-outline-'+props.outline) || ('btn-primary')} btn-${props.size || 'default'} ${props.block && 'btn-block'}`}
+        className={`btn ${
+          (props.estilo && "btn-" + props.estilo) || "btn-primary"
+        } ${(props.outline && "btn-outline-" + props.outline) || ""}
+       ${(props.size && "btn-" + props.size) || ""} ${
+          (props.block && "btn-block") || ""
+        }`}
         href={props.href}
       >
         {props.children}
@@ -22,8 +25,13 @@ const Button = props => {
       <Link
         to={props.to}
         exact={props.exact}
-        className={`button button--${props.size || 'default'} ${props.inverse &&
-          'button--inverse'} ${props.danger && 'button--danger'}`}
+        className={`btn ${
+          (props.estilo && "btn-" + props.estilo) || "btn-primary"
+        } ${(props.outline && "btn-outline-" + props.outline) || ""}
+         ${(props.size && "btn-" + props.size) || ""} ${
+          (props.block && "btn-block") || ""
+        }`}
+        href={props.href}
       >
         {props.children}
       </Link>
@@ -31,8 +39,12 @@ const Button = props => {
   }
   return (
     <button
-      // className={`btn ${props.estilo} btn-${props.size || 'default'}`}   
-      className={`btn ${(props.estilo && 'btn-'+props.estilo) || (props.outline && 'btn-outline-'+props.outline) || ('btn-primary')} btn-${props.size || 'default'} ${props.block && 'btn-block'}`}
+      // className={`btn ${props.estilo} btn-${props.size || 'default'}`}
+      className={`btn ${
+        (props.estilo && "btn-" + props.estilo) ||
+        (props.outline && "btn-outline-" + props.outline) ||
+        "btn-primary"
+      } btn-${props.size || "default"} ${props.block && "btn-block"}`}
       // className={`btn btn-${props.estilo || 'primary'} 'btn-outline-'${props.outline || 'primary'} 'btn-'${props.size || 'default'}`}
       onClick={props.onClick}
       disabled={props.disabled}

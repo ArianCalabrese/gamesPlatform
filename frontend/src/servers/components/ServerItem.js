@@ -34,7 +34,7 @@ const ServerItem = (props) => {
             >
               Unirse
             </a>
-            <Button to={`/${props.id}`} exact>
+            <Button estilo="secondary" block to={`/${props.id}`} exact >
               {" "}
               Copiar data
             </Button>
