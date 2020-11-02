@@ -1,0 +1,24 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+}
+
+.wrapper p{
+    text-align: center;
+    margin: auto;
+}
+
+.wrapper .playerName{
+    text-decoration: underline;
+}
+.topScoreBoard{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 auto;
+}
+
+.topScoreBoard p{
+    text-align: center;
+    margin: auto;
+}
