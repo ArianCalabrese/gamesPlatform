@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useContext } from "react";
 
 import {
   BrowserRouter as Router,
@@ -10,10 +10,9 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import ServersCreated from "./servers/pages/ServersCreated";
 import Formulario from "./servers/pages/Formulario";
 import ServerInfo from "./servers/pages/ServerInfo";
-import Login from "./users/pages/Login";
-import { AuthContext } from "./shared/context/auth-context";
-import { useHttpClient } from "./shared/hooks/http-hook";
 
+import UserProvider from "./shared/context/UserProvider";
+import { useHttpClient } from "./shared/hooks/http-hook";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -23,23 +22,11 @@ const App = () => {
   // eslint-disable-next-line
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState();
-  //
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
-
-  const asignUser = useCallback((usuario) => {
-    setUser(usuario);
-  }, []);
+  const userData = useContext(UserProvider.context);
 
   let routes;
 
-  if (isLoggedIn) {
+  if (userData) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -68,20 +55,12 @@ const App = () => {
     );
   }
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        login: login,
-        logout: logout,
-        user: user,
-        asignUser: asignUser,
-      }}
-    >
+    <UserProvider>
       <Router>
         <MainNavigation />
         <main className="header">{routes}</main>
       </Router>
-    </AuthContext.Provider>
+    </UserProvider>
   );
 };
 

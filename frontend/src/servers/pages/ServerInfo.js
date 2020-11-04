@@ -22,7 +22,7 @@ const ServerInfo = (props) => {
     const fetchServer = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/servers/${serverId}`
+          `https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/servers/${serverId}`
         );
         setLoadedServer(responseData.server);
         console.log(responseData.server);

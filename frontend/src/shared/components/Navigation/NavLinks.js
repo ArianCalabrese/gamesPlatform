@@ -1,27 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
-import { AuthContext } from "../../context/auth-context";
+import UserProvider from "../../context/UserProvider";
+import _ from "lodash";
 
 import "./NavLinks.css";
 
-
 const NavLinks = () => {
-  const auth = useContext(AuthContext);
+  const userData = useContext(UserProvider.context);
+  const notLogged = _.isEmpty(userData);
 
   const _handleSignInClick = () => {
     // Authenticate using via passport api in the backend
     // Open Twitter login page
     // Upon successful login, a cookie session will be stored in the client
-    window.open("http://localhost:5000/api/users/steam", "_self");
+    window.open(
+      "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/users/steam",
+      "_self"
+    );
   };
-  
+
   const _handleLogoutClick = () => {
     // Logout using Twitter passport api
     // Set authenticated state to false in the HomePage
-    window.open("http://localhost:5000/api/users/logout", "_self");
-    auth.logout();
-
+    window.open(
+      "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/users/logout",
+      "_self"
+    );
   };
 
   return (
@@ -31,17 +35,17 @@ const NavLinks = () => {
           Servidores
         </NavLink>
       </li>
-      {auth.isLoggedIn && (
+      {!notLogged && (
         <li>
           <NavLink to="/create">Crear Sala</NavLink>
         </li>
       )}
-      {!auth.isLoggedIn && (
+      {notLogged && (
         <li>
           <button onClick={_handleSignInClick}>Ingresar</button>
         </li>
       )}
-      {auth.isLoggedIn && (
+      {!notLogged && (
         <li>
           <button onClick={_handleLogoutClick}>LOGOUT</button>
         </li>

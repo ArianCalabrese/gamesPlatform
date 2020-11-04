@@ -60,7 +60,7 @@ const Formulario = () => {
     event.preventDefault();
     try {
       sendRequest(
-        "http://localhost:5000/api/servers/create",
+        "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/servers/create",
         "POST",
         JSON.stringify({
           name: formState.inputs.name.value,
