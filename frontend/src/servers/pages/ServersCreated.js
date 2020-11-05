@@ -4,7 +4,6 @@ import ServerList from "../components/ServerList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/UserProvider";
 
 import "./ServersCreated.css";
 

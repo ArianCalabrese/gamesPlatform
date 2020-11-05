@@ -15,27 +15,25 @@ const ServerList = (props) => {
       </div>
     );
   }
-// console.log("items");
-// console.log(props.items);
+  // console.log("items");
+  // console.log(props.items);
   return (
-    <div className="container-fluid">
-      <div className="row mt-5 justify-content-center">
-        <div className="col-md-9 col-xs-12 columnas">
-          {props.items.map((vm) => (
-            <ServerItem
-              // image={server.imageUrl}
-              // imageTitle={server.imageTitle}
-              map={vm.server.map}
-              name={vm.server.name}
-              players={vm.server.players}
-              ip={vm.server.connect}
-              ping={vm.server.ping}
-              id={vm.id}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ul class="list-group list-group-horizontal align-items-stretch flex-wrap">
+      {props.items.map((vm) => (
+        <li class="list-group-item border-0 .mx-auto">
+          <ServerItem
+            // image={server.imageUrl}
+            // imageTitle={server.imageTitle}
+            map={vm.server.map}
+            name={vm.server.name}
+            players={vm.server.players}
+            ip={vm.server.connect}
+            ping={vm.server.ping}
+            id={vm.id}
+          />
+        </li>
+      ))}
+    </ul>
   );
 };
 

@@ -1,18 +1,35 @@
 import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import UserProvider from "../../context/UserProvider";
+import { AuthContext } from "../../context/auth-context";
 import _ from "lodash";
+import { useHttpClient } from "../../hooks/http-hook";
 
 import "./NavLinks.css";
 
 const NavLinks = () => {
-  const userData = useContext(UserProvider.context);
-  const notLogged = _.isEmpty(userData);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/users/login/success"
+        );
+        console.log("responseData");
+        console.log(responseData);
+        if (!_.isEmpty(responseData)) {
+          auth.asignUser(responseData);
+          auth.login();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [sendRequest]);
 
   const _handleSignInClick = () => {
-    // Authenticate using via passport api in the backend
-    // Open Twitter login page
-    // Upon successful login, a cookie session will be stored in the client
     window.open(
       "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/users/steam",
       "_self"
@@ -20,8 +37,7 @@ const NavLinks = () => {
   };
 
   const _handleLogoutClick = () => {
-    // Logout using Twitter passport api
-    // Set authenticated state to false in the HomePage
+    auth.logout();
     window.open(
       "https://southamerica-east1-atiweb.cloudfunctions.net/getServers/api/users/logout",
       "_self"
@@ -35,17 +51,17 @@ const NavLinks = () => {
           Servidores
         </NavLink>
       </li>
-      {!notLogged && (
+      {auth.isLoggedIn && (
         <li>
           <NavLink to="/create">Crear Sala</NavLink>
         </li>
       )}
-      {notLogged && (
+      {!auth.isLoggedIn && (
         <li>
           <button onClick={_handleSignInClick}>Ingresar</button>
         </li>
       )}
-      {!notLogged && (
+      {auth.isLoggedIn && (
         <li>
           <button onClick={_handleLogoutClick}>LOGOUT</button>
         </li>
