@@ -1,16 +1,8 @@
 .nav-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+padding: .45rem, 1rem;
 }
 
-.nav-links li {
+/* .nav-links li {
   margin: 1rem;
   font-size: 32px;
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -73,4 +65,4 @@
     background: #f8df00;
     color: #292929;
   }
-}
+} */

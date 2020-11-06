@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import "./MainHeader.css";
 
-import './MainHeader.css';
-
-const MainHeader = props => {
-    return <header className="main-header">{props.children}</header>
-}
+const MainHeader = (props) => {
+  return <div>{props.children}</div>;
+};
 
 export default MainHeader;

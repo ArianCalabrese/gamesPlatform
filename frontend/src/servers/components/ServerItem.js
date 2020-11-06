@@ -38,7 +38,7 @@ const ServerItem = (props) => {
           className="align-middle"
         >
           {" "}
-          Copiar data
+          Ver servidor
         </Button>
       </div>
     </Card>

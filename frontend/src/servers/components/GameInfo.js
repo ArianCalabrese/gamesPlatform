@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import Button from "../../shared/components/FormElements/Button";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-//
-import useCopyToClipboard from "../../shared/hooks/copy-clipboard-hook";
+import React from "react";
 import Card from "../../shared/components/UIElements/Card";
+import { Table } from "react-bootstrap";
 
 import "./GameInfo.css";
 
@@ -20,26 +14,36 @@ const GameInfo = (props) => {
       </div>
     );
   } else {
-    var payments = [];
-    props.items.forEach((player) => {
-      payments.push(
-        <div className="wrapper">
-          <p className="playerName">{player.name}</p>
-          <p>|</p>
-          <p className="playerScore">{player.score}</p>
-        </div>
-      );
+    var players = props.items.sort(function (a, b) {
+      if (a.score > b.score) {
+        return 1;
+      }
+      if (a.score < b.score) {
+        return -1;
+      }
+      return 0;
     });
   }
 
   return (
-    <div>
-      <div className="topScoreBoard">
-        <p>Player</p>
-        <p>Score</p>
-      </div>
-      <div className="scoreboard">{payments}</div>
-    </div>
+    <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {players.map((player, index) => (
+          <tr>
+            <td>{index}</td>
+            <td>{player.name}</td>
+            <td>{player.score}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 };
 
